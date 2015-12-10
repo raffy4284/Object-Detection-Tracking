@@ -10,7 +10,7 @@ Mat canny_output,src, gausblur, mask,hsv,drawing;
 int thresh = 200;
 int max_thresh = 255;
 RNG rng(12345);
-int contouring();
+vector<Moments> contouring();
 
 /** @function main */
 int main( int argc, char** argv )
@@ -25,7 +25,7 @@ int main( int argc, char** argv )
 
     GaussianBlur( src, gausblur, cv::Size(9, 9), 2, 2 );
     cvtColor(gausblur,hsv,COLOR_BGR2HSV);
-    inRange(hsv,Scalar(40,75,74),Scalar(90,255,255),mask);
+    inRange(hsv,Scalar(22,0,149),Scalar(300,252,255),mask);
     erode(mask, mask, getStructuringElement(MORPH_ELLIPSE, Size(10, 10)) );
     dilate( mask, mask, getStructuringElement(MORPH_ELLIPSE, Size(10, 10)) ); 
 
@@ -33,36 +33,61 @@ int main( int argc, char** argv )
     blur(mask, mask, Size(3,3));
 
     /// Create Window
-    cout << contouring() << endl;
+    vector<Moments> items = contouring();
+    cout << items.size() << endl;
   }
   waitKey(0);
   return(0);
 }
 
 /** @function thresh_callback */
-int contouring()
+vector<Moments> contouring()
 {
-  int numObjects = 0;
   
   vector<vector<Point> > contours;
   vector<Vec4i> hierarchy;
 
   /// Detect edges using canny
   Canny( mask, mask, thresh, thresh*2, 3 );
+
   /// Find contours
   findContours( mask, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+
+  vector<Moments> mu(contours.size() );
+
   /// Draw contours
   Mat drawing = Mat::zeros( mask.size(), CV_8UC3 );
   for( int i = 0; i< contours.size(); i++ ){
     Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
     double area = contourArea(contours[i], true);
-    if (area < 500 )
+    if (area < 300 )
       continue;
-    numObjects +=1;
-    drawContours( src, contours, i, color, 2, 8, hierarchy, 0, Point() );
+    mu[i] = moments( contours[i], false );
   }
+
+
+
+  ///  Get the mass centers:
+  vector<Point2f> mc( mu.size() );
+  for( int i = 0; i < mu.size(); i++ ){
+    mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 ); 
+  }
+
+  for( int i = 0; i< mu.size(); i++ ){
+    Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+    float radius = pow(mu[i].m00/3.14,0.5);
+
+    //drawContours( src, contours, i, color, 2, 8, hierarchy, 0, Point() );
+    circle( src, mc[i], radius, color, -1, 8, 0 );
+  }
+
+
+
+
+
   /// Show in a window
   namedWindow( "original", CV_WINDOW_AUTOSIZE );
   imshow( "original", src );
-  return numObjects;
+  return mu;
 }
