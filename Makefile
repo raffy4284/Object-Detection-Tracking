@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named ObjectContouring
+# Target rules for targets named calibrate
 
 # Build rule for target.
-ObjectContouring: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ObjectContouring
-.PHONY : ObjectContouring
+calibrate: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 calibrate
+.PHONY : calibrate
 
 # fast build rule for target.
-ObjectContouring/fast:
-	$(MAKE) -f CMakeFiles/ObjectContouring.dir/build.make CMakeFiles/ObjectContouring.dir/build
-.PHONY : ObjectContouring/fast
+calibrate/fast:
+	$(MAKE) -f CMakeFiles/calibrate.dir/build.make CMakeFiles/calibrate.dir/build
+.PHONY : calibrate/fast
 
-ObjectContouring.o: ObjectContouring.cpp.o
+calibrate.o: calibrate.cpp.o
 
-.PHONY : ObjectContouring.o
+.PHONY : calibrate.o
 
 # target to build an object file
-ObjectContouring.cpp.o:
-	$(MAKE) -f CMakeFiles/ObjectContouring.dir/build.make CMakeFiles/ObjectContouring.dir/ObjectContouring.cpp.o
-.PHONY : ObjectContouring.cpp.o
+calibrate.cpp.o:
+	$(MAKE) -f CMakeFiles/calibrate.dir/build.make CMakeFiles/calibrate.dir/calibrate.cpp.o
+.PHONY : calibrate.cpp.o
 
-ObjectContouring.i: ObjectContouring.cpp.i
+calibrate.i: calibrate.cpp.i
 
-.PHONY : ObjectContouring.i
+.PHONY : calibrate.i
 
 # target to preprocess a source file
-ObjectContouring.cpp.i:
-	$(MAKE) -f CMakeFiles/ObjectContouring.dir/build.make CMakeFiles/ObjectContouring.dir/ObjectContouring.cpp.i
-.PHONY : ObjectContouring.cpp.i
+calibrate.cpp.i:
+	$(MAKE) -f CMakeFiles/calibrate.dir/build.make CMakeFiles/calibrate.dir/calibrate.cpp.i
+.PHONY : calibrate.cpp.i
 
-ObjectContouring.s: ObjectContouring.cpp.s
+calibrate.s: calibrate.cpp.s
 
-.PHONY : ObjectContouring.s
+.PHONY : calibrate.s
 
 # target to generate assembly for a file
-ObjectContouring.cpp.s:
-	$(MAKE) -f CMakeFiles/ObjectContouring.dir/build.make CMakeFiles/ObjectContouring.dir/ObjectContouring.cpp.s
-.PHONY : ObjectContouring.cpp.s
+calibrate.cpp.s:
+	$(MAKE) -f CMakeFiles/calibrate.dir/build.make CMakeFiles/calibrate.dir/calibrate.cpp.s
+.PHONY : calibrate.cpp.s
 
 # Help Target
 help:
@@ -158,10 +158,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... ObjectContouring"
-	@echo "... ObjectContouring.o"
-	@echo "... ObjectContouring.i"
-	@echo "... ObjectContouring.s"
+	@echo "... calibrate"
+	@echo "... calibrate.o"
+	@echo "... calibrate.i"
+	@echo "... calibrate.s"
 .PHONY : help
 
 
